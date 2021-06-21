@@ -15,7 +15,7 @@ while exit is False:
         guess_count += 1
         print("Number of guesses:", guess_count)
         break
-    exit = input("To continue type guess or exit: ")
+    exit = input("Press enter to continue or type exit to exit: ")
     if exit == "exit":
         print("Total number of guesses:", guess_count)
         exit = True
