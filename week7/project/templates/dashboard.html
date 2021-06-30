@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Christian</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="{% static 'fonts/ionicons.min.css' %}">
@@ -21,148 +21,54 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                </ul><span class="navbar-text actions"> <a class="login" href="/login">Logout</a><a class="btn btn-light action-button" role="button" href="/signup">Admin</a></span>
+                    <span class="navbar-text actions"> <a class="login" href="accounts/logout">Logout</a>
+                        {% else %}
+                        <span class="navbar-text actions">
+                            <a class="login" href="accounts/login">Log In</a>
+                            <a class="login" role="button" href="accounts/register">Sign Up</a></span>
+                        </ul>
+                            {% endif %}
             </div>
         </div>
     </nav>
     <div class="bg-light border rounded border-light hero-technology jumbotron py-5 px-4"></div>
     <section class="contact-clean">
-        <form method="post">
-            <h2 class="text-center">Submit New Pizza</h2>
-            <div class="mb-3"><input class="form-control" type="text" name="name" placeholder="Name"></div>
-            <div class="mb-3"><input class="form-control mb-3" type="number" name="price" placeholder="Price ($)"></div><input class="form-control mb-3" type="file" name="image">
-            <div class="mb-3"><textarea class="form-control" name="description" placeholder="Description" rows="14"></textarea></div>
-            <div class="mb-3"><button class="btn btn-primary" type="submit">Create New product</button></div>
-        </form>
+      <form method="post" action="add_idea">
+        {% csrf_token %}  
+        <h2 class="text-center">Submit a complaint</h2>
+        <div class="mb-3"><input class="form-control" type="text" name="name" placeholder="Name"></div>
+        <div class="mb-3"><textarea class="form-control" name="desc" placeholder="Description" rows="14"></textarea></div>
+        <div class="mb-3">
+          <!-- <input class="form-control mb-3" type="number" name="price" placeholder="Price ($)"></div> -->
+        <!-- <input class="form-control mb-3" type="file" name="imgURL"> -->
+        <div class="mb-3"><button class="btn btn-primary" type="submit">Submit</button></div>
+      </form>
     </section><div class="photo-gallery">
-<div class="container-fluid">
-  <div class="px-lg-5">
+      <div class="container-fluid">
+        <div class="px-lg-5">
+          {% block content %}
+          
+          {% for idea in idea %}
+          <div class="row">     
+                    <!-- Gallery item -->
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                      <!-- <div class="bg-white rounded shadow-sm"><img src="{{idea.imgURL.url}}" alt="" class="img-fluid card-img-top"> -->
+                        <h5> <a href="#" class="text-dark">{{idea.name}}</a></h5>
+                        <p class="small text-muted mb-0">{{idea.desc}}</p>                    
+                        <div class="p-4">
+                            <!-- <h4>${{idea.price}}</h4> -->
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
 
-    <div class="row">
-      <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
+                    {% endblock content %}
+                    <!-- End -->
           </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-        
-        <!-- Gallery item -->
-      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-        <div class="bg-white rounded shadow-sm"><img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80" alt="" class="img-fluid card-img-top">
-          <div class="p-4">
-            <h5> <a href="#" class="text-dark">Pizza</a></h5>
-              <h4>$19.99</h4>
-            <p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-              
-              <a class="btn btn-danger mt-2">Delete</a>
-            
-          </div>
-        </div>
-      </div>
-      <!-- End -->
-
-
     </div>
-    <div class="py-5 text-right"><a href="#" class="btn btn-dark px-5 py-3 text-uppercase">Show me more</a></div>
+    </div>
   </div>
 </div>
 </div>
@@ -181,5 +87,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     <script src="{% static 'js/script.min.js' %}"></script>
 </body>
-
 </html>

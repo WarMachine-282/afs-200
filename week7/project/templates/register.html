@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Products</title>
+    <title>Registration</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="{% static 'fonts/ionicons.min.css' %}">
@@ -33,42 +33,34 @@
             </div>
         </div>
     </nav>
-    <div class="bg-light border rounded border-light hero-technology jumbotron py-5 px-4"></div><div class="photo-gallery">
-<div class="container-fluid">
-  <div class="px-lg-5">
-
-    <div class="row">
-      {% block content %}
-
-      {% for product in products %}
-              <!-- Gallery item -->
-              <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-                <div class="bg-white rounded shadow-sm"><img src="{{product.imgURL.url}}" alt="" class="img-fluid card-img-top">
-                  <div class="p-4">
-                    <h5> <a href="#" class="text-dark">{{product.name}}</a></h5>
-                      <h4>${{product.price}}</h4>
-                    <p class="small text-muted mb-0">{{product.desc}}</p>
-                    
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
-
-              {% endblock content %}
-              <!-- End -->
-
-
-    </div>
-  </div>
-</div>
-</div>
+    <div class="bg-light border rounded border-light hero-technology jumbotron py-5 px-4"></div>
+    <section class="register-photo">
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form action="register" method="post">
+                {% csrf_token %}
+                <h2 class="text-center"><strong>Create</strong> an account.</h2>
+                <div class="mb-3"><input class="form-control" type="username" name="username" placeholder="Username"></div>
+                <div class="mb-3"><input class="form-control" type="password" name="password1" placeholder="Password"></div>
+                <div class="mb-3"><input class="form-control" type="password" name="password2" placeholder="Confirm Password (repeat)"></div>
+                <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Sign Up</button></div><a class="already" href="accounts/login">You already have an account? Login here.</a>
+            </form>
+            <div class="text-center">
+                {% for message in messages %}
+                <h5> {{message}}  </h5>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
     <section class="highlight-phone">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <div class="intro">
                         <h2>We Deliver! Give us a call!</h2>
-                        <p>Give us a call and we'll set out to make your delivery in thirty minutes or less guaranteed!</p><a class="btn btn-primary" role="button" href="#">Call us today</a>
+                        <p>Give us a call and we'll set out to make your delivery in thirty minutes or less guaranteed!
+
+                        </p><a class="btn btn-primary" role="button" href="#">Call us today</a>
                     </div>
                 </div>
                 <div class="col-sm-4">

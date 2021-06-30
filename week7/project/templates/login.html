@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Christian</title>
+    <title>Login</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="{% static 'fonts/ionicons.min.css' %}">
@@ -21,8 +21,15 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                </ul><span class="navbar-text actions"> <a class="login" href="/login">Log In</a><a class="btn btn-light action-button" role="button" href="/signup">Sign Up</a></span>
+                    <span class="navbar-text actions"> <a class="login" href="accounts/logout">Logout</a>
+                        {% else %}
+                        <span class="navbar-text actions">
+                            <a class="login" href="accounts/login">Log In</a>
+                            <a class="login" role="button" href="accounts/register">Sign Up</a></span>
+                        </ul>
+                            {% endif %}
             </div>
         </div>
     </nav>
@@ -30,12 +37,18 @@
     <section class="register-photo">
         <div class="form-container">
             <div class="image-holder"></div>
-            <form method="post">
+            <form action="login" method="post">
+                {% csrf_token %}
                 <h2 class="text-center"><strong>Sign in </strong>to your account</h2>
-                <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
+                <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Username"></div>
                 <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
-                <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Sign In</button></div><a class="already" href="/signup">Don't have an account? Click here.</a>
+                <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Sign In</button></div><a class="already" href="accounts/register">Don't have an account? Click here.</a>
             </form>
+            <div class="text-center">
+                {% for message in messages %}
+                <h5> {{message}}  </h5>
+                {% endfor %}
+            </div>
         </div>
     </section>
     <section class="highlight-phone">

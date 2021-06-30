@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Christian</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
     <link rel="stylesheet" href="{% static 'fonts/ionicons.min.css' %}">
@@ -21,54 +21,50 @@
                     <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="/products">Products</a></li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                </ul><span class="navbar-text actions"> <a class="login" href="/login">Log In</a><a class="btn btn-light action-button" role="button" href="/signup">Sign Up</a></span>
+                    <span class="navbar-text actions"> <a class="login" href="accounts/logout">Logout</a>
+                        {% else %}
+                        <span class="navbar-text actions">
+                            <a class="login" href="accounts/login">Log In</a>
+                            <a class="login" role="button" href="accounts/register">Sign Up</a></span>
+                        </ul>
+                            {% endif %}
             </div>
         </div>
     </nav>
     <div class="bg-light border rounded border-light hero-technology jumbotron py-5 px-4">
         <h1 class="hero-title">Pizza Co.</h1>
         <p class="hero-subtitle">Have you tried our freaking pizza? It's insane.</p>
-        <p><a class="btn btn-primary btn-lg hero-button" role="button" href="/product">Check it out!</a></p>
+        <p><a class="btn btn-primary btn-lg hero-button" role="button" href="/products">Check it out!</a></p>
     </div>
     <section class="projects-clean">
         <div class="container">
             <div class="intro">
                 <h2 class="text-center">Our Newest Pizzas!</h2>
-                <p class="text-center">Come try our new line of pizza and be amazed! </p>
             </div>
-            <div class="row projects">
-                <div class="col-sm-6 col-lg-4 item"><img class="img-fluid" src="{% static 'img/pic1.jpg' %}">
-                    <h3 class="name">Extra Pepperoni</h3>
-                    <h3 class="name" style="margin-top: 0;font-size: 15px;">Starting at/ $19.99</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><img class="img-fluid" src="{% static 'img/pic2.jpg' %}">
-                    <h3 class="name">Italian Garlic</h3>
-                    <h3 class="name" style="margin-top: 0;font-size: 15px;">Starting at/ $19.99</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><img class="img-fluid" src="{% static 'img/pic3.jpg' %}">
-                    <h3 class="name">Supreme</h3>
-                    <h3 class="name" style="margin-top: 0;font-size: 15px;">Starting at/ $19.99</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><img class="img-fluid" src="{% static 'img/pic4.jpg' %}">
-                    <h3 class="name">Italian Sausage</h3>
-                    <h3 class="name" style="margin-top: 0;font-size: 15px;">Starting at/ $19.99</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><img class="img-fluid" src="{% static 'img/pic2.jpg' %}">
-                    <h3 class="name">Italian Garlic</h3>
-                    <h3 class="name" style="margin-top: 0;font-size: 15px;">Starting at/ $19.99</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-                <div class="col-sm-6 col-lg-4 item"><img class="img-fluid" src="{% static 'img/pic1.jpg' %}">
-                    <h3 class="name">Extra Pepperoni</h3>
-                    <h3 class="name" style="margin-top: 0;font-size: 15px;">Starting at/ $19.99</h3>
-                    <p class="description">Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus est, interdum justo suscipit id.</p>
-                </div>
-            </div>
+            <div class="row">
+                {% block content %}
+          
+                {% for product in products %}
+                        <!-- Gallery item -->
+                        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                          <div class="bg-white rounded shadow-sm"><img src="{{product.imgURL.url}}" alt="" class="img-fluid card-img-top">
+                            <div class="p-4">
+                              <h5> <a href="#" class="text-dark">{{product.name}}</a></h5>
+                                <h4>${{product.price}}</h4>
+                              <p class="small text-muted mb-0">{{product.desc}}</p>
+                              
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+          
+                        {% endblock content %}
+                        <!-- End -->
+          
+          
+              </div>
         </div>
     </section>
     <section class="testimonials-clean">

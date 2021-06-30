@@ -1,4 +1,5 @@
 {% load static %}
+{% static "images" as baseUrl %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Christian</title>
+    <title>About</title>
     <link
       rel="stylesheet"
       href="{% static 'bootstrap/css/bootstrap.min.css' %}"
@@ -45,15 +46,16 @@
             <li class="nav-item">
               <a class="nav-link" href="/products">Products</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-          </ul>
-          <span class="navbar-text actions">
-            <a class="login" href="/login">Log In</a
-            ><a class="btn btn-light action-button" role="button" href="/signup"
-              >Sign Up</a
-            ></span
-          >
-        </div>
+            <span class="navbar-text actions"> <a class="login" href="accounts/logout">Logout</a>
+                {% else %}
+                <span class="navbar-text actions">
+                    <a class="login" href="accounts/login">Log In</a>
+                    <a class="login" role="button" href="accounts/register">Sign Up</a></span>
+                </ul>
+                    {% endif %}
+    </div>
       </div>
     </nav>
     <div
@@ -75,15 +77,19 @@
           <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
             <div class="intro"></div>
             <!-- <div class="about-div"></div> -->
+            <br>
+            <br>
             <h1>About Us</h1>
             <header></header>
             <div class="text">
+              <br>
               <p>
                 Come try our pizza, it's the greatest pizza, all other pizzas
                 are not real pizza
                 <span style="text-decoration: underline">Excelsior!</span> We
                 started our pizza company in 23 BCE
               </p>
+              <br>
               <p>
                 and our mission was to create the best pizza ever.
                 <strong>Think you've had better? I think not.</strong> Our pizza
@@ -93,6 +99,10 @@
                 work day and night to deliver to your door everyday, rarely
                 taking any breaks.
               </p>
+              <br>
+              <br>
+              <br>
+
               <figure class="figure d-block"></figure>
             </div>
           </div>
